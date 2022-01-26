@@ -1,0 +1,38 @@
+# The west manifest file (west.yml) for MCUXpresso SDK overall delivery.
+#
+# The per-workspace west configuration file, ${workspace_path}/.west/config,
+# specifies the path of the project containing this manifest file, the
+# path is relative to the workspace location ${workspace_path}.
+#
+#     [manifest]
+#     path = eiq
+#
+# See the west documentation for more information:
+#
+# https://docs.zephyrproject.org/latest/guides/west/index.html
+
+manifest:
+  
+  remotes:
+    - name: mcux-sdk-middleware-eiq
+      url-base: https://github.com/NXPmicro
+
+  defaults:
+    remote: mcux-sdk-middleware-eiq
+
+  projects:
+    - name: mcux-sdk-middleware-deepviewrt
+      url:  https://github.com/NXP/mcux-sdk-middleware-deepviewrt
+      revision: MCUX_2.10.0
+      path: eiq/deepviewrt
+    - name: mcux-sdk-middleware-glow
+      url:  https://github.com/NXPmicro/mcux-sdk-middleware-glow
+      revision: MCUX_2.10.0
+      path: eiq/glow
+    - name: mcux-sdk-middleware-tensorflow
+      url:  https://github.com/NXPmicro/mcux-sdk-middleware-tensorflow
+      revision: MCUX_2.10.0
+      path: eiq/tensorflow-lite
+
+  self:
+    path: eiq
