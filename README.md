@@ -12,4 +12,4 @@ west init -m https://github.com/NXPmicro/mcux-sdk-middleware-eiq --mr ${revision
 cd eiq
 west update
 ```
-Replace ```${revision}``` with any SDK revision you wish to achieve. This can be ```main``` if you want the latest state, or any commit SHA.
+Replace ```${revision}``` with any SDK revision you wish to achieve. This can be ```MCUX_2.10.0``` or any commit SHA.
