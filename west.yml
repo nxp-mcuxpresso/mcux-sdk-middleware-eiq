@@ -22,7 +22,7 @@ manifest:
 
   projects:
     - name: mcux-sdk-middleware-deepviewrt
-      url:  https://github.com/NXP/mcux-sdk-middleware-deepviewrt
+      url:  https://github.com/NXPmicro/mcux-sdk-middleware-deepviewrt
       revision: MCUX_2.10.0
       path: eiq/deepviewrt
     - name: mcux-sdk-middleware-glow
