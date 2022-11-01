@@ -15,7 +15,7 @@
   </externalDefinitions>
   <ksdk id="MCUXpressoSDK2120_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_10" name="MCUXpressoSDK2120_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_10" version="2.12.0"/>
   <components>
-    <component id="middleware.eiq.gui.printf.MIMXRT1176" name="eiq_GuiPrintf" brief="Video capture and display abstract layer" version="1.0.0" full_name="eiq_GuiPrintf" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path="./" project_base_path="source">
+    <component id="middleware.eiq.gui.printf.MIMXRT1176" name="eiq_GuiPrintf" brief="Video capture and display abstract layer" version="1.0.0" full_name="eiq_GuiPrintf" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path=".././" project_base_path="source">
       <dependencies>
         <component_dependency value="middleware.eiq.worker.MIMXRT1176"/>
       </dependencies>
@@ -33,7 +33,7 @@
         <include_path relative_path="./common/gprintf" project_relative_path="gprintf" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.MIMXRT1176" name="TensorFlow Lite Micro" brief="TensorFlow Lite Micro library" version="2.6.0" full_name="TensorFlow Lite Micro library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.MIMXRT1176" name="TensorFlow Lite Micro" brief="TensorFlow Lite Micro library" version="2.6.0" full_name="TensorFlow Lite Micro library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <all>
           <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1176"/>
@@ -342,7 +342,7 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT1176" name="TensorFlow Lite Micro with CMSIS-NN kernels" brief="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path="./tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT1176" name="TensorFlow Lite Micro with CMSIS-NN kernels" brief="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <defines>
         <define name="CMSIS_NN" value=""/>
       </defines>
@@ -390,7 +390,7 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.examples.microspeech.MIMXRT1176" name="TensorFlow Lite Micro word detection" brief="TensorFlow Lite Micro word detection library" version="2.6.0" full_name="TensorFlow Lite Micro word detection library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.examples.microspeech.MIMXRT1176" name="TensorFlow Lite Micro word detection" brief="TensorFlow Lite Micro word detection library" version="2.6.0" full_name="TensorFlow Lite Micro word detection library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1176"/>
       </dependencies>
@@ -454,7 +454,7 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.reference.MIMXRT1176" name="TensorFlow Lite Micro with reference kernels" brief="TensorFlow Lite Micro library with reference kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with reference kernel implementations" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path="./tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.reference.MIMXRT1176" name="TensorFlow Lite Micro with reference kernels" brief="TensorFlow Lite Micro library with reference kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with reference kernel implementations" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT1176"/>
       </dependencies>
@@ -478,7 +478,7 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1176" name="CMSIS-NN" brief="CMSIS-NN library" version="3.0.0" full_name="CMSIS-NN library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite/third_party/cmsis" project_base_path="eiq/tensorflow-lite/third_party/cmsis">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1176" name="CMSIS-NN" brief="CMSIS-NN library" version="3.0.0" full_name="CMSIS-NN library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/cmsis" project_base_path="eiq/tensorflow-lite/third_party/cmsis">
       <source relative_path="../../../CMSIS/Core/Include" project_relative_path="CMSIS/Core/Include" type="c_include">
         <files mask="cachel1_armv7.h"/>
         <files mask="cmsis_armcc.h"/>
@@ -680,7 +680,7 @@
         <include_path relative_path="../../../CMSIS/DSP/Include" project_relative_path="CMSIS/DSP/Include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.fft2d.MIMXRT1176" name="FFT2D" brief="General Purpose FFT (Fast Fourier/Cosine/Sine Transform) Package" version="1.0.0" full_name="FFT2D library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.fft2d.MIMXRT1176" name="FFT2D" brief="General Purpose FFT (Fast Fourier/Cosine/Sine Transform) Package" version="1.0.0" full_name="FFT2D library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <source relative_path="./tensorflow-lite/third_party/fft2d" project_relative_path="third_party/fft2d" type="src">
         <files mask="fftsg.c"/>
       </source>
@@ -696,7 +696,7 @@
         <include_path relative_path="./tensorflow-lite/third_party/fft2d" project_relative_path="third_party/fft2d" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1176" name="Flatbuffers" brief="Flatbuffers library" version="1.12.0" full_name="Flatbuffers library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1176" name="Flatbuffers" brief="Flatbuffers library" version="1.12.0" full_name="Flatbuffers library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <source relative_path="./tensorflow-lite/third_party/flatbuffers" project_relative_path="third_party/flatbuffers" type="doc">
         <files mask="readme.md"/>
         <files mask="LICENSE.txt"/>
@@ -731,7 +731,7 @@
         <include_path relative_path="./tensorflow-lite/third_party/flatbuffers/include" project_relative_path="third_party/flatbuffers/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT1176" name="Gemmlowp" brief="Gemmlowp library" version="1.0.0" full_name="Gemmlowp library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT1176" name="Gemmlowp" brief="Gemmlowp library" version="1.0.0" full_name="Gemmlowp library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <source relative_path="./tensorflow-lite/third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="doc">
         <files mask="LICENSE"/>
         <files mask="README.md"/>
@@ -752,7 +752,7 @@
         <include_path relative_path="./tensorflow-lite/third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1176" name="Kiss FFT" brief="A mixed-radix Fast Fourier Transform library" version="1.3.0" full_name="Kiss FFT library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite/third_party/kissfft" project_base_path="eiq/tensorflow-lite/third_party/kissfft">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1176" name="Kiss FFT" brief="A mixed-radix Fast Fourier Transform library" version="1.3.0" full_name="Kiss FFT library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/kissfft" project_base_path="eiq/tensorflow-lite/third_party/kissfft">
       <source relative_path="./" type="src">
         <files mask="kiss_fft.c"/>
       </source>
@@ -784,7 +784,7 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1176" name="Ruy" brief="Ruy library" version="1.0.0" full_name="Ruy library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1176" name="Ruy" brief="Ruy library" version="1.0.0" full_name="Ruy library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <source relative_path="./tensorflow-lite/third_party/ruy" project_relative_path="third_party/ruy" type="doc">
         <files mask="LICENSE"/>
         <files mask="README.md"/>
@@ -802,7 +802,7 @@
         <include_path relative_path="./tensorflow-lite/third_party/ruy" project_relative_path="third_party/ruy" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.MIMXRT1176" name="Xtensa HiFi4 NN" brief="Xtensa HiFi4 NN library" version="2.4.1" full_name="Xtensa HiFi4 NN library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite/third_party/xa_nnlib_hifi4" project_base_path="eiq/tensorflow-lite/third_party/xa_nnlib_hifi4">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.MIMXRT1176" name="Xtensa HiFi4 NN" brief="Xtensa HiFi4 NN library" version="2.4.1" full_name="Xtensa HiFi4 NN library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/xa_nnlib_hifi4" project_base_path="eiq/tensorflow-lite/third_party/xa_nnlib_hifi4">
       <source relative_path="../../../algo/common/include" project_relative_path="algo/common/include" type="c_include">
         <files mask="xa_api_defs.h"/>
         <files mask="xa_nnlib_common.h"/>
@@ -1042,7 +1042,7 @@
         <include_path relative_path="../../../include/nnlib" project_relative_path="include/nnlib" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.worker.MIMXRT1176" name="eiq_IWorker" brief="Video and audio interface layer" version="1.0.0" full_name="eiq_IWorker" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path="./" project_base_path="source">
+    <component id="middleware.eiq.worker.MIMXRT1176" name="eiq_IWorker" brief="Video and audio interface layer" version="1.0.0" full_name="eiq_IWorker" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path=".././" project_base_path="source">
       <source relative_path="./common" project_relative_path="./" type="c_include">
         <files mask="eiq_common.h"/>
         <files mask="eiq_iui.h"/>
@@ -1058,7 +1058,7 @@
         <include_path relative_path="./common" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.worker.audio.MIMXRT1176" name="eiq_AudioWorker" brief="Audio capture and play abstract layer" version="1.0.0" full_name="eiq_AudioWorker" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path="./" project_base_path="source">
+    <component id="middleware.eiq.worker.audio.MIMXRT1176" name="eiq_AudioWorker" brief="Audio capture and play abstract layer" version="1.0.0" full_name="eiq_AudioWorker" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path=".././" project_base_path="source">
       <dependencies>
         <component_dependency value="middleware.eiq.worker.MIMXRT1176"/>
       </dependencies>
@@ -1086,7 +1086,7 @@
         <include_path relative_path="./common/audio" project_relative_path="audio" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.worker.sensor.MIMXRT1176" name="eiq_Sensor" brief="Sensor capture abstract layer" version="1.0.0" full_name="eiq_Sensor" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path="./" project_base_path="source">
+    <component id="middleware.eiq.worker.sensor.MIMXRT1176" name="eiq_Sensor" brief="Sensor capture abstract layer" version="1.0.0" full_name="eiq_Sensor" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path=".././" project_base_path="source">
       <source relative_path="./common/sensor" project_relative_path="sensor" type="src">
         <files mask="sensor_capture.c"/>
         <files mask="sensor_raw.c"/>
@@ -1102,7 +1102,7 @@
         <include_path relative_path="./common/sensor" project_relative_path="sensor" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.worker.video.MIMXRT1176" name="eiq_VideoWorker" brief="Video record&amp;play abstract layer" version="1.0.0" full_name="eiq_VideoWorker" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path="./" project_base_path="source">
+    <component id="middleware.eiq.worker.video.MIMXRT1176" name="eiq_VideoWorker" brief="Video record&amp;play abstract layer" version="1.0.0" full_name="eiq_VideoWorker" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path=".././" project_base_path="source">
       <dependencies>
         <component_dependency value="middleware.eiq.worker.MIMXRT1176"/>
       </dependencies>
@@ -1133,7 +1133,7 @@
         <include_path relative_path="./common/video" project_relative_path="video" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.deepviewrt.MIMXRT1176" name="DeepViewRT Lib" brief="DeepViewRT Runtime library" version="2.4.44" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path="./" project_base_path="eiq">
+    <component id="middleware.eiq.deepviewrt.MIMXRT1176" name="DeepViewRT Lib" brief="DeepViewRT Runtime library" version="2.4.44" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path=".././" project_base_path="eiq">
       <source relative_path="./deepviewrt/include" project_relative_path="deepviewrt/include" type="c_include">
         <files mask="deepview_ops.h"/>
         <files mask="deepview_rpc.h"/>
@@ -1159,7 +1159,7 @@
         <include_path relative_path="./deepviewrt/include" project_relative_path="deepviewrt/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.deepviewrt.deps.flatcc.MIMXRT1176" name="DeepViewRT modelrunner server Lib" brief="DeepViewRT modelrunner server library" version="2.41.1" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq">
+    <component id="middleware.eiq.deepviewrt.deps.flatcc.MIMXRT1176" name="DeepViewRT modelrunner server Lib" brief="DeepViewRT modelrunner server library" version="2.41.1" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq">
       <source relative_path="./deepviewrt/deps/flatcc/include/flatcc/portable" project_relative_path="deepviewrt/deps/flatcc/include/flatcc/portable" type="c_include">
         <files mask="paligned_alloc.h"/>
         <files mask="pbase64.h"/>
@@ -1180,7 +1180,7 @@
         <include_path relative_path="./deepviewrt/deps/flatcc/include" project_relative_path="deepviewrt/deps/flatcc/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.deepviewrt.deps.json.MIMXRT1176" name="DeepViewRT modelrunner server Lib" brief="DeepViewRT modelrunner server library" version="2.41.1" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq">
+    <component id="middleware.eiq.deepviewrt.deps.json.MIMXRT1176" name="DeepViewRT modelrunner server Lib" brief="DeepViewRT modelrunner server library" version="2.41.1" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq">
       <source relative_path="./deepviewrt/deps/json" project_relative_path="deepviewrt/deps/json" type="src">
         <files mask="flex.c"/>
         <files mask="reader.c"/>
@@ -1200,7 +1200,7 @@
         <include_path relative_path="./deepviewrt/deps/json/include" project_relative_path="deepviewrt/deps/json/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.deepviewrt.deps.stb.MIMXRT1176" name="DeepViewRT modelrunner server Lib" brief="DeepViewRT modelrunner server library" version="2.41.1" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq">
+    <component id="middleware.eiq.deepviewrt.deps.stb.MIMXRT1176" name="DeepViewRT modelrunner server Lib" brief="DeepViewRT modelrunner server library" version="2.41.1" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq">
       <source relative_path="./deepviewrt/deps/stb" project_relative_path="deepviewrt/deps/stb" type="src">
         <files mask="stb_image.c"/>
         <files mask="stb_image_resize.c"/>
@@ -1220,7 +1220,7 @@
         <include_path relative_path="./deepviewrt/deps/stb/include" project_relative_path="deepviewrt/deps/stb/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.deepviewrt.modelrunner.server.MIMXRT1176" name="DeepViewRT modelrunner server Lib" brief="DeepViewRT modelrunner server library" version="2.41.1" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq">
+    <component id="middleware.eiq.deepviewrt.modelrunner.server.MIMXRT1176" name="DeepViewRT modelrunner server Lib" brief="DeepViewRT modelrunner server library" version="2.41.1" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq">
       <source toolchain="mcuxpresso armgcc" relative_path="./deepviewrt/lib" project_relative_path="deepviewrt/lib" type="lib">
         <files mask="libmodelrunner-rt.a"/>
       </source>
@@ -1231,7 +1231,7 @@
         <include_path relative_path="./deepviewrt/include" project_relative_path="deepviewrt/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.deepviewrt.modelrunner.server.flash.MIMXRT1176" name="DeepViewRT modelrunner server Lib" brief="DeepViewRT modelrunner server library" version="2.41.1" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq">
+    <component id="middleware.eiq.deepviewrt.modelrunner.server.flash.MIMXRT1176" name="DeepViewRT modelrunner server Lib" brief="DeepViewRT modelrunner server library" version="2.41.1" full_name="DeepViewRT Lib" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq">
       <source toolchain="mcuxpresso armgcc" relative_path="./deepviewrt/lib" project_relative_path="deepviewrt/lib" type="lib">
         <files mask="libmodelrunner-rt-flash.a"/>
       </source>
@@ -1239,7 +1239,7 @@
         <include_path relative_path="./deepviewrt/include" project_relative_path="deepviewrt/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.glow.MIMXRT1176" name="Glow utils" brief="Utilities for Glow NN compiler." version="1.0.0" full_name="Glow Utils" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path="./" project_base_path="eiq">
+    <component id="middleware.eiq.glow.MIMXRT1176" name="Glow utils" brief="Utilities for Glow NN compiler." version="1.0.0" full_name="Glow Utils" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path=".././" project_base_path="eiq">
       <source relative_path="./glow/bundle_utils" project_relative_path="glow/bundle_utils" type="c_include">
         <files mask="glow_bundle_utils.h"/>
       </source>
@@ -1260,7 +1260,7 @@
         <include_path relative_path="./glow/bundle_utils" project_relative_path="glow/bundle_utils" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.mpp.MIMXRT1176" name="MPP library" brief="Multimedia Processing Pipelines Library" version="0.9.0" full_name="Multimedia Processing Pipelines Library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq">
+    <component id="middleware.eiq.mpp.MIMXRT1176" name="MPP library" brief="Multimedia Processing Pipelines Library" version="0.9.0" full_name="Multimedia Processing Pipelines Library" devices="MIMXRT1176xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq">
       <dependencies>
         <all>
           <component_dependency value="middleware.freertos-kernel.MIMXRT1176"/>

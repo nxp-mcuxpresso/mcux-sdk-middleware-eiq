@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_middleware_nxp_eiq_machine_learning_MIMXRT685S_manifest_v3_10" name="eIQ" brief="eIQ machine learning SDK containing: - ARM CMSIS-NN library (neural network kernels optimized  for Cortex-M cores) - an inference engine for running TensorFlow Lite models - project examples for the Glow NN Compiler" format_version="3.10" api_version="2.0.0" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
-  <!--Timestamp (UTC): 2022-07-20 11:58:09.055074-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_middleware_nxp_eiq_machine_learning_MIMXRT595S_manifest_v3_10" name="eIQ" brief="eIQ machine learning SDK containing: - ARM CMSIS-NN library (neural network kernels optimized  for Cortex-M cores) - an inference engine for running TensorFlow Lite models - project examples for the Glow NN Compiler" format_version="3.10" api_version="2.0.0" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
+  <!--Timestamp (UTC): 2022-07-20 11:57:40.688490-->
   <!--This manifest is generated based on sdk repo commit: 7fb442914f92023b395b260777eb2355254fd71d-->
   <externalDefinitions>
-    <definition extID="MIMXRT685S"/>
-    <definition extID="cm33_MIMXRT685S"/>
+    <definition extID="MIMXRT595S"/>
+    <definition extID="cm33_MIMXRT595S"/>
     <definition extID="armgcc"/>
-    <definition extID="hifi4_MIMXRT685S"/>
+    <definition extID="fusionf1_MIMXRT595S"/>
   </externalDefinitions>
-  <ksdk id="MCUXpressoSDK2120_middleware_nxp_eiq_machine_learning_MIMXRT685S_manifest_v3_10" name="MCUXpressoSDK2120_middleware_nxp_eiq_machine_learning_MIMXRT685S_manifest_v3_10" version="2.12.0"/>
+  <ksdk id="MCUXpressoSDK2120_middleware_nxp_eiq_machine_learning_MIMXRT595S_manifest_v3_10" name="MCUXpressoSDK2120_middleware_nxp_eiq_machine_learning_MIMXRT595S_manifest_v3_10" version="2.12.0"/>
   <components>
-    <component id="middleware.eiq.audio.mimxrt685audevk.MIMXRT685S" name="eiq_audio" brief="eIQ audio stream from microphone to speaker abstraction" version="1.0.0" full_name="eIQ audio stream" devices="MIMXRT685S" user_visible="false" type="middleware" package_base_path="./common/audio" project_base_path="source/audio">
+    <component id="middleware.eiq.audio.MIMXRT595S" name="eiq_audio" brief="eIQ audio stream from microphone to speaker abstraction" version="1.0.0" full_name="eIQ audio stream" devices="MIMXRT595S" user_visible="false" type="middleware" package_base_path=".././common/audio" project_base_path="source/audio">
       <source relative_path="../../rtxxx" project_relative_path="./" type="src">
         <files mask="audio_capture.cpp"/>
       </source>
       <source relative_path="../../rtxxx" project_relative_path="./" type="c_include">
         <files mask="audio_stream.h"/>
       </source>
-      <source relative_path="../../rtxxx/aud_evk" project_relative_path="./" type="src" device_cores="cm33_MIMXRT685S">
+      <source relative_path="../../rtxxx" project_relative_path="./" type="src" device_cores="cm33_MIMXRT595S">
         <files mask="audio_stream.c"/>
       </source>
-      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_eiq_audio_mimxrt685audevk_MIMXRT685S_cm33.cmake" hidden="true"/>
+      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT595S">
+        <files mask="middleware_eiq_audio_MIMXRT595S_cm33.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="../../rtxxx" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.gui.printf.MIMXRT685S" name="eiq_GuiPrintf" brief="Video capture and display abstract layer" version="1.0.0" full_name="eiq_GuiPrintf" devices="MIMXRT685S" user_visible="false" type="middleware" package_base_path="./" project_base_path="source">
+    <component id="middleware.eiq.gui.printf.MIMXRT595S" name="eiq_GuiPrintf" brief="Video capture and display abstract layer" version="1.0.0" full_name="eiq_GuiPrintf" devices="MIMXRT595S" user_visible="false" type="middleware" package_base_path=".././" project_base_path="source">
       <dependencies>
-        <component_dependency value="middleware.eiq.worker.MIMXRT685S"/>
+        <component_dependency value="middleware.eiq.worker.MIMXRT595S"/>
       </dependencies>
       <source relative_path="./common/gprintf" project_relative_path="gprintf" type="src">
         <files mask="chgui.c"/>
@@ -42,12 +42,12 @@
         <include_path relative_path="./common/gprintf" project_relative_path="gprintf" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.MIMXRT685S" name="TensorFlow Lite Micro" brief="TensorFlow Lite Micro library" version="2.6.0" full_name="TensorFlow Lite Micro library" devices="MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.MIMXRT595S" name="TensorFlow Lite Micro" brief="TensorFlow Lite Micro library" version="2.6.0" full_name="TensorFlow Lite Micro library" devices="MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <all>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT685S"/>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT685S"/>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT685S"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT595S"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT595S"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT595S"/>
         </all>
       </dependencies>
       <source relative_path="./" type="doc">
@@ -341,21 +341,21 @@
         <files mask="schema_generated.h"/>
         <files mask="schema_utils.h"/>
       </source>
-      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_eiq_tensorflow_lite_micro_MIMXRT685S_cm33.cmake" hidden="true"/>
+      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT595S">
+        <files mask="middleware_eiq_tensorflow_lite_micro_MIMXRT595S_cm33.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT685S" name="TensorFlow Lite Micro with CMSIS-NN kernels" brief="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path="./tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT595S" name="TensorFlow Lite Micro with CMSIS-NN kernels" brief="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" devices="MIMXRT595S" device_cores="cm33_MIMXRT595S" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <defines>
         <define name="CMSIS_NN" value=""/>
       </defines>
       <dependencies>
         <all>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT685S"/>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT685S"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT595S"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT595S"/>
         </all>
       </dependencies>
       <source relative_path="../tensorflow/lite/micro/kernels/cmsis_nn" project_relative_path="tensorflow/lite/micro/kernels/cmsis_nn" type="src">
@@ -386,16 +386,16 @@
         <files mask="softmax.cpp"/>
         <files mask="svdf.cpp"/>
       </source>
-      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT685S_cm33.cmake" hidden="true"/>
+      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT595S">
+        <files mask="middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT595S_cm33.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.examples.microspeech.MIMXRT685S" name="TensorFlow Lite Micro word detection" brief="TensorFlow Lite Micro word detection library" version="2.6.0" full_name="TensorFlow Lite Micro word detection library" devices="MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.examples.microspeech.MIMXRT595S" name="TensorFlow Lite Micro word detection" brief="TensorFlow Lite Micro word detection library" version="2.6.0" full_name="TensorFlow Lite Micro word detection library" devices="MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
-        <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT685S"/>
+        <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT595S"/>
       </dependencies>
       <source relative_path="../tensorflow/lite/micro/examples/micro_speech" project_relative_path="tensorflow/lite/micro/examples/micro_speech" type="src">
         <files mask="audio_provider.cpp"/>
@@ -457,9 +457,9 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.reference.MIMXRT685S" name="TensorFlow Lite Micro with reference kernels" brief="TensorFlow Lite Micro library with reference kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with reference kernel implementations" devices="MIMXRT685S" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path="./tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.reference.MIMXRT595S" name="TensorFlow Lite Micro with reference kernels" brief="TensorFlow Lite Micro library with reference kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with reference kernel implementations" devices="MIMXRT595S" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
-        <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT685S"/>
+        <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT595S"/>
       </dependencies>
       <source relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
         <files mask="activations.cpp"/>
@@ -481,7 +481,7 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT685S" name="CMSIS-NN" brief="CMSIS-NN library" version="3.0.0" full_name="CMSIS-NN library" devices="MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite/third_party/cmsis" project_base_path="eiq/tensorflow-lite/third_party/cmsis">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT595S" name="CMSIS-NN" brief="CMSIS-NN library" version="3.0.0" full_name="CMSIS-NN library" devices="MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/cmsis" project_base_path="eiq/tensorflow-lite/third_party/cmsis">
       <source relative_path="../../../CMSIS/Core/Include" project_relative_path="CMSIS/Core/Include" type="c_include">
         <files mask="cachel1_armv7.h"/>
         <files mask="cmsis_armcc.h"/>
@@ -670,8 +670,8 @@
         <files mask="LICENSE.txt"/>
         <files mask="README.md"/>
       </source>
-      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT685S_cm33.cmake" hidden="true"/>
+      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT595S">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT595S_cm33.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -680,7 +680,7 @@
         <include_path relative_path="../../../CMSIS/DSP/Include" project_relative_path="CMSIS/DSP/Include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.fft2d.MIMXRT685S" name="FFT2D" brief="General Purpose FFT (Fast Fourier/Cosine/Sine Transform) Package" version="1.0.0" full_name="FFT2D library" devices="MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.fft2d.MIMXRT595S" name="FFT2D" brief="General Purpose FFT (Fast Fourier/Cosine/Sine Transform) Package" version="1.0.0" full_name="FFT2D library" devices="MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <source relative_path="./tensorflow-lite/third_party/fft2d" project_relative_path="third_party/fft2d" type="src">
         <files mask="fftsg.c"/>
       </source>
@@ -696,7 +696,7 @@
         <include_path relative_path="./tensorflow-lite/third_party/fft2d" project_relative_path="third_party/fft2d" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT685S" name="Flatbuffers" brief="Flatbuffers library" version="1.12.0" full_name="Flatbuffers library" devices="MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT595S" name="Flatbuffers" brief="Flatbuffers library" version="1.12.0" full_name="Flatbuffers library" devices="MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <source relative_path="./tensorflow-lite/third_party/flatbuffers" project_relative_path="third_party/flatbuffers" type="doc">
         <files mask="readme.md"/>
         <files mask="LICENSE.txt"/>
@@ -721,14 +721,14 @@
         <files mask="vector_downward.h"/>
         <files mask="verifier.h"/>
       </source>
-      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers_MIMXRT685S_cm33.cmake" hidden="true"/>
+      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT595S">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers_MIMXRT595S_cm33.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./tensorflow-lite/third_party/flatbuffers/include" project_relative_path="third_party/flatbuffers/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT685S" name="Gemmlowp" brief="Gemmlowp library" version="1.0.0" full_name="Gemmlowp library" devices="MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT595S" name="Gemmlowp" brief="Gemmlowp library" version="1.0.0" full_name="Gemmlowp library" devices="MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <source relative_path="./tensorflow-lite/third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="doc">
         <files mask="LICENSE"/>
         <files mask="README.md"/>
@@ -739,14 +739,14 @@
       <source relative_path="./tensorflow-lite/third_party/gemmlowp/internal" project_relative_path="third_party/gemmlowp/internal" type="c_include">
         <files mask="detect_platform.h"/>
       </source>
-      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_gemmlowp_MIMXRT685S_cm33.cmake" hidden="true"/>
+      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT595S">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_gemmlowp_MIMXRT595S_cm33.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./tensorflow-lite/third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT685S" name="Kiss FFT" brief="A mixed-radix Fast Fourier Transform library" version="1.3.0" full_name="Kiss FFT library" devices="MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite/third_party/kissfft" project_base_path="eiq/tensorflow-lite/third_party/kissfft">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT595S" name="Kiss FFT" brief="A mixed-radix Fast Fourier Transform library" version="1.3.0" full_name="Kiss FFT library" devices="MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/kissfft" project_base_path="eiq/tensorflow-lite/third_party/kissfft">
       <source relative_path="./" type="src">
         <files mask="kiss_fft.c"/>
       </source>
@@ -778,7 +778,7 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT685S" name="Ruy" brief="Ruy library" version="1.0.0" full_name="Ruy library" devices="MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT595S" name="Ruy" brief="Ruy library" version="1.0.0" full_name="Ruy library" devices="MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <source relative_path="./tensorflow-lite/third_party/ruy" project_relative_path="third_party/ruy" type="doc">
         <files mask="LICENSE"/>
         <files mask="README.md"/>
@@ -786,14 +786,14 @@
       <source relative_path="./tensorflow-lite/third_party/ruy/ruy/profiler" project_relative_path="third_party/ruy/ruy/profiler" type="c_include">
         <files mask="instrumentation.h"/>
       </source>
-      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_ruy_MIMXRT685S_cm33.cmake" hidden="true"/>
+      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT595S">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_ruy_MIMXRT595S_cm33.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./tensorflow-lite/third_party/ruy" project_relative_path="third_party/ruy" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.MIMXRT685S" name="Xtensa HiFi4 NN" brief="Xtensa HiFi4 NN library" version="2.4.1" full_name="Xtensa HiFi4 NN library" devices="MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite/third_party/xa_nnlib_hifi4" project_base_path="eiq/tensorflow-lite/third_party/xa_nnlib_hifi4">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.MIMXRT595S" name="Xtensa HiFi4 NN" brief="Xtensa HiFi4 NN library" version="2.4.1" full_name="Xtensa HiFi4 NN library" devices="MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/xa_nnlib_hifi4" project_base_path="eiq/tensorflow-lite/third_party/xa_nnlib_hifi4">
       <source relative_path="../../../algo/common/include" project_relative_path="algo/common/include" type="c_include">
         <files mask="xa_api_defs.h"/>
         <files mask="xa_nnlib_common.h"/>
@@ -1033,7 +1033,7 @@
         <include_path relative_path="../../../include/nnlib" project_relative_path="include/nnlib" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.binary.MIMXRT685S" name="Xtensa HiFi4 NN" brief="Xtensa HiFi4 NN library binary for i.MX RT685" version="2.4.1" full_name="Xtensa HiFi4 NN library" devices="MIMXRT685S" device_cores="hifi4_MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite/third_party/xa_nnlib_hifi4" project_base_path="eiq/tensorflow-lite/third_party/xa_nnlib_hifi4">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.binary.MIMXRT595S" name="Xtensa HiFi4 NN" brief="Xtensa HiFi4 NN library binary for i.MX RT595" version="2.4.1" full_name="Xtensa HiFi4 NN library" devices="MIMXRT595S" device_cores="fusionf1_MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/xa_nnlib_hifi4" project_base_path="eiq/tensorflow-lite/third_party/xa_nnlib_hifi4">
       <source relative_path="../../../include" project_relative_path="include" type="c_include">
         <files mask="xa_type_def.h"/>
       </source>
@@ -1045,7 +1045,7 @@
         <files mask="xa_nnlib_lstm_api.h"/>
         <files mask="xa_nnlib_standards.h"/>
       </source>
-      <source relative_path="../../../lib/mimxrt685s" project_relative_path="libs" type="lib">
+      <source relative_path="../../../lib/mimxrt595s" project_relative_path="libs" type="lib">
         <files mask="libxa_nnlib_hifi4.a"/>
       </source>
       <source relative_path="./" type="doc">
@@ -1058,11 +1058,11 @@
         <include_path relative_path="../../../include/nnlib" project_relative_path="include/nnlib" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.xtensa.MIMXRT685S" name="TensorFlow Lite Micro with Xtensa HiFi4 DSP kernels" brief="TensorFlow Lite Micro library with Xtensa HiFi4 DSP kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with Xtensa HiFi4 DSP kernel implementations" devices="MIMXRT685S" device_cores="hifi4_MIMXRT685S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="./tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.xtensa.MIMXRT595S" name="TensorFlow Lite Micro with Xtensa HiFi4 DSP kernels" brief="TensorFlow Lite Micro library with Xtensa HiFi4 DSP kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with Xtensa HiFi4 DSP kernel implementations" devices="MIMXRT595S" device_cores="fusionf1_MIMXRT595S" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <all>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT685S"/>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.binary.MIMXRT685S"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT595S"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.binary.MIMXRT595S"/>
         </all>
       </dependencies>
       <source relative_path="../tensorflow/lite/micro/kernels/xtensa" project_relative_path="tensorflow/lite/micro/kernels/xtensa" type="src">
@@ -1103,7 +1103,7 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.worker.MIMXRT685S" name="eiq_IWorker" brief="Video and audio interface layer" version="1.0.0" full_name="eiq_IWorker" devices="MIMXRT685S" user_visible="false" type="middleware" package_base_path="./" project_base_path="source">
+    <component id="middleware.eiq.worker.MIMXRT595S" name="eiq_IWorker" brief="Video and audio interface layer" version="1.0.0" full_name="eiq_IWorker" devices="MIMXRT595S" user_visible="false" type="middleware" package_base_path=".././" project_base_path="source">
       <source relative_path="./common" project_relative_path="./" type="c_include">
         <files mask="eiq_common.h"/>
         <files mask="eiq_iui.h"/>
@@ -1113,9 +1113,9 @@
         <include_path relative_path="./common" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.worker.audio.MIMXRT685S" name="eiq_AudioWorker" brief="Audio capture and play abstract layer" version="1.0.0" full_name="eiq_AudioWorker" devices="MIMXRT685S" user_visible="false" type="middleware" package_base_path="./" project_base_path="source">
+    <component id="middleware.eiq.worker.audio.MIMXRT595S" name="eiq_AudioWorker" brief="Audio capture and play abstract layer" version="1.0.0" full_name="eiq_AudioWorker" devices="MIMXRT595S" user_visible="false" type="middleware" package_base_path=".././" project_base_path="source">
       <dependencies>
-        <component_dependency value="middleware.eiq.worker.MIMXRT685S"/>
+        <component_dependency value="middleware.eiq.worker.MIMXRT595S"/>
       </dependencies>
       <source relative_path="./common/audio" project_relative_path="audio" type="src">
         <files mask="eiq_audio_worker.c"/>
@@ -1135,7 +1135,7 @@
         <include_path relative_path="./common/audio" project_relative_path="audio" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.worker.sensor.MIMXRT685S" name="eiq_Sensor" brief="Sensor capture abstract layer" version="1.0.0" full_name="eiq_Sensor" devices="MIMXRT685S" user_visible="false" type="middleware" package_base_path="./" project_base_path="source">
+    <component id="middleware.eiq.worker.sensor.MIMXRT595S" name="eiq_Sensor" brief="Sensor capture abstract layer" version="1.0.0" full_name="eiq_Sensor" devices="MIMXRT595S" user_visible="false" type="middleware" package_base_path=".././" project_base_path="source">
       <source relative_path="./common/sensor" project_relative_path="sensor" type="src">
         <files mask="sensor_capture.c"/>
         <files mask="sensor_raw.c"/>
@@ -1148,9 +1148,9 @@
         <include_path relative_path="./common/sensor" project_relative_path="sensor" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.worker.video.MIMXRT685S" name="eiq_VideoWorker" brief="Video capture and display abstract layer" version="1.0.0" full_name="eiq_VideoWorker" devices="MIMXRT685S" user_visible="false" type="middleware" package_base_path="./" project_base_path="source">
+    <component id="middleware.eiq.worker.video.MIMXRT595S" name="eiq_VideoWorker" brief="Video capture and display abstract layer" version="1.0.0" full_name="eiq_VideoWorker" devices="MIMXRT595S" user_visible="false" type="middleware" package_base_path=".././" project_base_path="source">
       <dependencies>
-        <component_dependency value="middleware.eiq.worker.MIMXRT685S"/>
+        <component_dependency value="middleware.eiq.worker.MIMXRT595S"/>
       </dependencies>
       <source relative_path="./common/video" project_relative_path="video" type="src">
         <files mask="eiq_camera.c"/>
@@ -1168,23 +1168,6 @@
       </source>
       <include_paths>
         <include_path relative_path="./common/video" project_relative_path="video" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.eiq.audio.evkmimxrt685.MIMXRT685S" name="eiq_audio" brief="eIQ audio stream from microphone to speaker abstraction" version="1.0.0" full_name="eIQ audio stream" devices="MIMXRT685S" user_visible="false" type="middleware" package_base_path="./common/audio" project_base_path="source/audio">
-      <source relative_path="../../rtxxx" project_relative_path="./" type="src">
-        <files mask="audio_capture.cpp"/>
-      </source>
-      <source relative_path="../../rtxxx" project_relative_path="./" type="c_include">
-        <files mask="audio_stream.h"/>
-      </source>
-      <source relative_path="../../rtxxx" project_relative_path="./" type="src" device_cores="cm33_MIMXRT685S">
-        <files mask="audio_stream.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="./" project_relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_eiq_audio_evkmimxrt685_MIMXRT685S_cm33.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="../../rtxxx" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
   </components>
