@@ -11,7 +11,9 @@
 #ifndef _HAL_DEBUG_H
 #define _HAL_DEBUG_H
 
-#include "mpp_config.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifndef EMULATOR
 #include "fsl_debug_console.h"
@@ -26,25 +28,24 @@
 
 #define LOG_DEFAULT_LEVEL LOG_LVL_ERR
 
-#ifndef HAL_LOG_LEVEL
-#define HAL_LOG_LEVEL LOG_DEFAULT_LEVEL
-#endif
-
-#define LOG(cond, module, lvl_str, format, ...)  do {	    \
-    {                                                       \
-        if (cond) {                                         \
-            PRINTF("\r[%u]", GET_TICK());                	    \
-            PRINTF(":%s:%s:(%s:%u)", module, lvl_str, __func__, __LINE__); \
-            PRINTF(":" format, ##__VA_ARGS__);              \
-        }                                                   \
-    }                                                       \
-} while (0)
+/*
+ * Implementation of LOG() should be external since
+ * this is depending on SDK configuration, especially
+ * regarding flag SDK_DEBUGCONSOLE.
+ */
+extern void LOGE(const char* module, const char* func, int line, const char* format, ...);
+extern void LOGI(const char* module, const char* func, int line, const char* format, ...);
+extern void LOGD(const char* module, const char* func, int line, const char* format, ...);
 
 #define HAL_LOGE(format, ...) \
-    LOG(LOG_LVL_ERR <= HAL_LOG_LEVEL, "HAL", "ERR", format, ##__VA_ARGS__)
+    LOGE("HAL", __func__, __LINE__, format, ##__VA_ARGS__)
 #define HAL_LOGI(format, ...) \
-    LOG(LOG_LVL_INFO <= HAL_LOG_LEVEL, "HAL", "INFO", format, ##__VA_ARGS__)
+    LOGI("HAL", __func__, __LINE__, format, ##__VA_ARGS__)
 #define HAL_LOGD(format, ...) \
-    LOG(LOG_LVL_DEBUG <= HAL_LOG_LEVEL, "HAL", "DBG", format, ##__VA_ARGS__)
+    LOGD("HAL", __func__, __LINE__, format, ##__VA_ARGS__)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _HAL_DEBUG_H */

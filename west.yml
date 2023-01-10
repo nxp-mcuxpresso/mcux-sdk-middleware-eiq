@@ -23,15 +23,15 @@ manifest:
   projects:
     - name: mcux-sdk-middleware-deepviewrt
       url:  https://github.com/NXPmicro/mcux-sdk-middleware-deepviewrt
-      revision: MCUX_2.11.0
+      revision: MCUX_2.13.0
       path: eiq/deepviewrt
     - name: mcux-sdk-middleware-glow
       url:  https://github.com/NXPmicro/mcux-sdk-middleware-glow
-      revision: MCUX_2.11.0
+      revision: MCUX_2.13.0
       path: eiq/glow
     - name: mcux-sdk-middleware-tensorflow
       url:  https://github.com/NXPmicro/mcux-sdk-middleware-tensorflow
-      revision: MCUX_2.11.0
+      revision: MCUX_2.13.0
       path: eiq/tensorflow-lite
 
   self:

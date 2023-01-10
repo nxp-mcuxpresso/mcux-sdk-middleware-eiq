@@ -12,8 +12,11 @@
  */
 
 #include "mpp_config.h"
+#include "board_config.h"
+#include "hal_camera_dev.h"
+#include "hal_debug.h"
 
-#ifdef ENABLE_CAMERA_DEV_MipiOv5640
+#if (defined HAL_ENABLE_CAMERA) && (HAL_ENABLE_CAMERA_DEV_MipiOv5640 == 1)
 #include <FreeRTOS.h>
 #include <task.h>
 #include <stdlib.h>
@@ -31,7 +34,6 @@
 #include "camera_support.h"
 #include "display_support.h"
 #include "fsl_common.h"
-#include "hal_camera_dev.h"
 #include "hal.h"
 #include "hal_utils.h"
 
@@ -367,16 +369,47 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Deinit(camera_dev_t *dev)
     return ret;
 }
 
+static uint32_t gCurrentBufferAddr = 0;
+
 hal_camera_status_t HAL_CameraDev_MipiOv5640_Start(const camera_dev_t *dev)
 {
     hal_camera_status_t ret = kStatus_HAL_CameraSuccess;
+    status_t status = kStatus_Success;
     HAL_LOGD("++HAL_CameraDev_MipiOv5640_Start\n");
-    CAMERA_RECEIVER_Start(&cameraReceiver);
+
+    /*
+     * Since 2 frame buffers are expected in CSI's queue before starting, it is
+     * necessary to submit at least one frame
+     */
+    if (gCurrentBufferAddr != 0)
+    {
+        HAL_LOGD("Submitting empty buffer\n");
+        CAMERA_RECEIVER_SubmitEmptyBuffer(&cameraReceiver, (uint32_t)gCurrentBufferAddr);
+        gCurrentBufferAddr = 0;
+    }
+
+    status = CAMERA_RECEIVER_Start(&cameraReceiver);
+    if (status != kStatus_Success) {
+        HAL_LOGE("Error with status=%d\n", (int)status);
+        ret = kStatus_HAL_CameraError;
+    }
     HAL_LOGD("--HAL_CameraDev_MipiOv5640_Start\n");
     return ret;
 }
 
-static uint32_t gCurrentBufferAddr = 0;
+hal_camera_status_t HAL_CameraDev_MipiOv5640_Stop(const camera_dev_t *dev)
+{
+    hal_camera_status_t ret = kStatus_HAL_CameraSuccess;
+    status_t status = kStatus_Success;
+    HAL_LOGD("++\n");
+    status = CAMERA_RECEIVER_Stop(&cameraReceiver);
+    if (status != kStatus_Success) {
+        HAL_LOGE("Error with status=%d\n", (int)status);
+        ret = kStatus_HAL_CameraError;
+    }
+    HAL_LOGD("--\n");
+    return ret;
+}
 
 hal_camera_status_t HAL_CameraDev_MipiOv5640_Dequeue(const camera_dev_t *dev, void **data, mpp_pixel_format_t *format)
 {
@@ -405,6 +438,7 @@ const static camera_dev_operator_t camera_dev_mipi_ov5640_ops = {
     .init        = HAL_CameraDev_MipiOv5640_Init,
     .deinit      = HAL_CameraDev_MipiOv5640_Deinit,
     .start       = HAL_CameraDev_MipiOv5640_Start,
+    .stop        = HAL_CameraDev_MipiOv5640_Stop,
     .enqueue     = HAL_CameraDev_MipiOv5640_Enqueue,
     .dequeue     = HAL_CameraDev_MipiOv5640_Dequeue,
     .get_buf_desc = HAL_CameraDev_MipiOv5640_Getbufdesc,
@@ -442,11 +476,16 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Enqueue(const camera_dev_t *dev, vo
     return error;
 }
 
-int camera_sim_setup(const char *name, camera_dev_t *dev, _Bool defconfig)
+int HAL_CameraDev_MipiOv5640_setup(const char *name, camera_dev_t *dev, _Bool defconfig)
 {
     dev->ops = &camera_dev_mipi_ov5640_ops;
 
     return 0;
 }
-
-#endif /* ENABLE_CAMERA_DEV_MipiOv5640 */
+#else /* (defined HAL_ENABLE_CAMERA) && (HAL_ENABLE_CAMERA_DEV_MipiOv5640 == 1) */
+int HAL_CameraDev_MipiOv5640_setup(const char *name, camera_dev_t *dev, _Bool defconfig)
+{
+    HAL_LOGE("Camera MipiOv5640 not enabled\n");
+    return -1;
+}
+#endif /* (defined HAL_ENABLE_CAMERA) && (HAL_ENABLE_CAMERA_DEV_MipiOv5640 == 1) */
