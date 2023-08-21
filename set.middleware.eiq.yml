@@ -3116,6 +3116,7 @@ scr.middleware.Glow_Utils:
       - evkbimxrt1050
       - evkmimxrt1060
       - evkbmimxrt1060
+      - evkcmimxrt1060
       - evkmimxrt1064
       - evkmimxrt1170
       - evkbmimxrt1170
@@ -7154,6 +7155,99 @@ middleware.eiq.worker.video.evkbmimxrt1060:
     - middleware.eiq.worker
   meta-name: middleware.eiq.worker.video.evkbmimxrt1060
   cmake_module_name: middleware_eiq_worker_video_evkbmimxrt1060
+middleware.eiq.worker.video.evkcmimxrt1060:
+  section-type: component
+  contents:
+    repo_base_path: middleware/eiq
+    project_base_path: source
+    files:
+    - source: middleware/eiq/common/video/camera/MT9M114_OV7725/eiq_camera_conf.c
+      project_relative_path: video
+      repo_relative_path: common/video/camera/MT9M114_OV7725
+      package_relative_path: common/video/camera/MT9M114_OV7725
+      type: src
+    - source: middleware/eiq/common/video/display/RK043FN02HC/eiq_display_conf.c
+      project_relative_path: video
+      repo_relative_path: common/video/display/RK043FN02HC
+      package_relative_path: common/video/display/RK043FN02HC
+      type: src
+    - source: middleware/eiq/common/video/eiq_camera.c
+      project_relative_path: video
+      repo_relative_path: common/video
+      package_relative_path: common/video
+      type: src
+    - source: middleware/eiq/common/video/eiq_display.c
+      project_relative_path: video
+      repo_relative_path: common/video
+      package_relative_path: common/video
+      type: src
+    - source: middleware/eiq/common/video/eiq_pxp.c
+      project_relative_path: video
+      repo_relative_path: common/video
+      package_relative_path: common/video
+      type: src
+    - source: middleware/eiq/common/video/eiq_video_worker.c
+      project_relative_path: video
+      repo_relative_path: common/video
+      package_relative_path: common/video
+      type: src
+    - source: middleware/eiq/common/video/eiq_camera.h
+      project_relative_path: video
+      repo_relative_path: common/video
+      package_relative_path: common/video
+      type: c_include
+    - source: middleware/eiq/common/video/eiq_camera_conf.h
+      project_relative_path: video
+      repo_relative_path: common/video
+      package_relative_path: common/video
+      type: c_include
+    - source: middleware/eiq/common/video/eiq_display.h
+      project_relative_path: video
+      repo_relative_path: common/video
+      package_relative_path: common/video
+      type: c_include
+    - source: middleware/eiq/common/video/eiq_display_conf.h
+      project_relative_path: video
+      repo_relative_path: common/video
+      package_relative_path: common/video
+      type: c_include
+    - source: middleware/eiq/common/video/eiq_pxp.h
+      project_relative_path: video
+      repo_relative_path: common/video
+      package_relative_path: common/video
+      type: c_include
+    - source: middleware/eiq/common/video/eiq_video_worker.h
+      project_relative_path: video
+      repo_relative_path: common/video
+      package_relative_path: common/video
+      type: c_include
+    - source: middleware/eiq/middleware_eiq_worker_video_evkcmimxrt1060.cmake
+      type: workspace
+      toolchains: armgcc
+      hidden: true
+    cc-include:
+    - repo_relative_path: common/video
+      project_relative_path: video
+      package_relative_path: common/video
+    package_base_path: middleware/eiq
+  belong_to: set.middleware.eiq
+  section_info:
+    description: Video capture and display abstract layer
+    version: 1.0.0
+    type: middleware
+    user_visible: never
+    full_name: eiq_VideoWorker
+    display_name: eiq_VideoWorker
+    taxonomy:
+      cclass: Machine Learning
+      cgroup: eIQ
+      csub: evkcmimxrt1060
+    vendor: NXP
+  dependency:
+    allOf:
+    - middleware.eiq.worker
+  meta-name: middleware.eiq.worker.video.evkcmimxrt1060
+  cmake_module_name: middleware_eiq_worker_video_evkcmimxrt1060
 middleware.eiq.worker.video.evkmimxrt685:
   section-type: component
   contents:

@@ -9,7 +9,7 @@
     <definition extID="core0_MIMXRT1062xxxxB"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <ksdk id="MCUXpressoSDK2140_middleware_nxp_eiq_machine_learning_MIMXRT1062_manifest_v3_13" name="MCUXpressoSDK2140_middleware_nxp_eiq_machine_learning_MIMXRT1062_manifest_v3_13" version="2.14.0"/>
+  <ksdk id="MCUXpressoSDK2141_middleware_nxp_eiq_machine_learning_MIMXRT1062_manifest_v3_13" name="MCUXpressoSDK2141_middleware_nxp_eiq_machine_learning_MIMXRT1062_manifest_v3_13" version="2.14.1" revision="Provided by Script"/>
   <components>
     <component id="middleware.eiq.worker.MIMXRT1062" name="eiq_IWorker" brief="Video and audio interface layer" version="1.0.0" full_name="eiq_IWorker" devices="MIMXRT1062xxxxA MIMXRT1062xxxxB" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="../middleware/eiq" project_base_path="source">
       <source relative_path="../../common" project_relative_path="./" type="c_include">
@@ -658,6 +658,37 @@
       </source>
       <source toolchain="armgcc" relative_path="./" type="workspace">
         <files mask="middleware_eiq_worker_video_evkbmimxrt1060.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="../../common/video" project_relative_path="video" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.worker.video.evkcmimxrt1060.MIMXRT1062" name="eiq_VideoWorker" brief="Video capture and display abstract layer" version="1.0.0" full_name="eiq_VideoWorker" devices="MIMXRT1062xxxxA MIMXRT1062xxxxB" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="../middleware/eiq" project_base_path="source">
+      <dependencies>
+        <component_dependency value="middleware.eiq.worker.MIMXRT1062"/>
+      </dependencies>
+      <source relative_path="../../common/video/camera/MT9M114_OV7725" project_relative_path="video" type="src">
+        <files mask="eiq_camera_conf.c"/>
+      </source>
+      <source relative_path="../../common/video/display/RK043FN02HC" project_relative_path="video" type="src">
+        <files mask="eiq_display_conf.c"/>
+      </source>
+      <source relative_path="../../common/video" project_relative_path="video" type="src">
+        <files mask="eiq_camera.c"/>
+        <files mask="eiq_display.c"/>
+        <files mask="eiq_pxp.c"/>
+        <files mask="eiq_video_worker.c"/>
+      </source>
+      <source relative_path="../../common/video" project_relative_path="video" type="c_include">
+        <files mask="eiq_camera.h"/>
+        <files mask="eiq_camera_conf.h"/>
+        <files mask="eiq_display.h"/>
+        <files mask="eiq_display_conf.h"/>
+        <files mask="eiq_pxp.h"/>
+        <files mask="eiq_video_worker.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_worker_video_evkcmimxrt1060.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="../../common/video" project_relative_path="video" type="c_include"/>
