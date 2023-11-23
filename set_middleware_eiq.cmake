@@ -14,23 +14,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 endif()
 
 
-if (CONFIG_USE_middleware_eiq_glow)
-# Add set(CONFIG_USE_middleware_eiq_glow true) in config.cmake to use this component
-
-message("middleware_eiq_glow component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/./glow/bundle_utils/glow_bundle_utils.c
-)
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./glow/bundle_utils
-)
-
-
-endif()
-
-
 if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers)
 # Add set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers true) in config.cmake to use this component
 
@@ -398,6 +381,52 @@ endif()
 endif()
 
 
+if (CONFIG_USE_middleware_eiq_glow)
+# Add set(CONFIG_USE_middleware_eiq_glow true) in config.cmake to use this component
+
+message("middleware_eiq_glow component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/./glow/bundle_utils/glow_bundle_utils.c
+)
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/./glow/bundle_utils
+)
+
+
+endif()
+
+
+if (CONFIG_USE_middleware_eiq_audio)
+# Add set(CONFIG_USE_middleware_eiq_audio true) in config.cmake to use this component
+
+message("middleware_eiq_audio component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if(CONFIG_CORE STREQUAL cm33)
+  target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+      ${CMAKE_CURRENT_LIST_DIR}/common/audio/rtxxx/audio_stream.c
+  )
+endif()
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/common/audio/rtxxx/audio_capture.cpp
+)
+
+if(CONFIG_CORE STREQUAL dsp)
+  target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+      ${CMAKE_CURRENT_LIST_DIR}/common/audio/rtxxx/dsp/audio_stream.c
+  )
+endif()
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/common/audio/rtxxx
+)
+
+
+endif()
+
+
 if (CONFIG_USE_middleware_eiq_audio_mimxrt685audevk)
 # Add set(CONFIG_USE_middleware_eiq_audio_mimxrt685audevk true) in config.cmake to use this component
 
@@ -456,45 +485,16 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 endif()
 
 
-if (CONFIG_USE_middleware_eiq_audio)
-# Add set(CONFIG_USE_middleware_eiq_audio true) in config.cmake to use this component
+if (CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1060)
+# Add set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1060 true) in config.cmake to use this component
 
-message("middleware_eiq_audio component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if(CONFIG_CORE STREQUAL cm33)
-  target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-      ${CMAKE_CURRENT_LIST_DIR}/common/audio/rtxxx/audio_stream.c
-  )
-endif()
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/common/audio/rtxxx/audio_capture.cpp
-)
-
-if(CONFIG_CORE STREQUAL dsp)
-  target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-      ${CMAKE_CURRENT_LIST_DIR}/common/audio/rtxxx/dsp/audio_stream.c
-  )
-endif()
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/common/audio/rtxxx
-)
-
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1170)
-# Add set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1170 true) in config.cmake to use this component
-
-message("middleware_eiq_worker_video_evkmimxrt1170 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+message("middleware_eiq_worker_video_evkmimxrt1060 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
 
 if(CONFIG_USE_middleware_eiq_worker)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/camera/RM68191_RM68200/eiq_camera_conf.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/display/RK055AHD091_RK055IQH091/eiq_display_conf.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/camera/MT9M114_OV7725/eiq_camera_conf.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/display/RK043FN02HC/eiq_display_conf.c
   ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
   ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
   ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
@@ -507,7 +507,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 
 else()
 
-message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt1170 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt1060 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
 
 endif()
 
@@ -1030,6 +1030,34 @@ endif()
 endif()
 
 
+if (CONFIG_USE_middleware_eiq_deepviewrt_nnlib)
+# Add set(CONFIG_USE_middleware_eiq_deepviewrt_nnlib true) in config.cmake to use this component
+
+message("middleware_eiq_deepviewrt_nnlib component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if((CONFIG_DEVICE_ID STREQUAL MIMXRT1042xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1052xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1176xxxxx OR CONFIG_DEVICE_ID STREQUAL MIMXRT1166xxxxx))
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/include
+)
+
+if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc))
+  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+      ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/lib/libdeepview-rt-cortex-m7f.a
+      -Wl,--end-group
+  )
+endif()
+
+else()
+
+message(SEND_ERROR "middleware_eiq_deepviewrt_nnlib dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
+
+endif()
+
+
 if (CONFIG_USE_middleware_eiq_deepviewrt_modelrunner_server)
 # Add set(CONFIG_USE_middleware_eiq_deepviewrt_modelrunner_server true) in config.cmake to use this component
 
@@ -1080,34 +1108,6 @@ endif()
 else()
 
 message(SEND_ERROR "middleware_eiq_deepviewrt_modelrunner_server_flash dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_deepviewrt_nnlib)
-# Add set(CONFIG_USE_middleware_eiq_deepviewrt_nnlib true) in config.cmake to use this component
-
-message("middleware_eiq_deepviewrt_nnlib component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if((CONFIG_DEVICE_ID STREQUAL MIMXRT1042xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1052xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1176xxxxx OR CONFIG_DEVICE_ID STREQUAL MIMXRT1166xxxxx))
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/include
-)
-
-if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc))
-  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/lib/libdeepview-rt-cortex-m7f.a
-      -Wl,--end-group
-  )
-endif()
-
-else()
-
-message(SEND_ERROR "middleware_eiq_deepviewrt_nnlib dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
 
 endif()
 
@@ -1182,6 +1182,157 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 else()
 
 message(SEND_ERROR "middleware_eiq_deepviewrt_deps_stb dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
+
+endif()
+
+
+if (CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1064)
+# Add set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1064 true) in config.cmake to use this component
+
+message("middleware_eiq_worker_video_evkmimxrt1064 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if(CONFIG_USE_middleware_eiq_worker)
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/camera/MT9M114_OV7725/eiq_camera_conf.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/display/RK043FN02HC/eiq_display_conf.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_video_worker.c
+)
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video
+)
+
+else()
+
+message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt1064 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
+
+endif()
+
+
+if (CONFIG_USE_middleware_eiq_worker_video_evkmimxrt595)
+# Add set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt595 true) in config.cmake to use this component
+
+message("middleware_eiq_worker_video_evkmimxrt595 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if(CONFIG_USE_middleware_eiq_worker)
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_video_worker.c
+)
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video
+)
+
+else()
+
+message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt595 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
+
+endif()
+
+
+if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary)
+# Add set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary true) in config.cmake to use this component
+
+message("middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if(((CONFIG_DEVICE_ID STREQUAL MIMXRT685S) OR (CONFIG_CORE STREQUAL dsp)))
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/.
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/include
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/include/nnlib
+)
+
+if(CONFIG_USE_COMPONENT_CONFIGURATION)
+  message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
+
+  target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
+    -DNNLIB_V2
+    -DMODEL_INT16
+    -Dhifi4
+  )
+
+endif()
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  -Wl,--start-group
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/lib/mimxrt685s/libxa_nnlib_hifi4.a
+  -Wl,--end-group
+)
+
+else()
+
+message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
+
+endif()
+
+
+if (CONFIG_USE_middleware_eiq_worker_video_mimxrt685audevk)
+# Add set(CONFIG_USE_middleware_eiq_worker_video_mimxrt685audevk true) in config.cmake to use this component
+
+message("middleware_eiq_worker_video_mimxrt685audevk component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if(CONFIG_USE_middleware_eiq_worker)
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_video_worker.c
+)
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video
+)
+
+else()
+
+message(SEND_ERROR "middleware_eiq_worker_video_mimxrt685audevk dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
+
+endif()
+
+
+if (CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1170)
+# Add set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1170 true) in config.cmake to use this component
+
+message("middleware_eiq_worker_video_evkmimxrt1170 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if(CONFIG_USE_middleware_eiq_worker)
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/camera/RM68191_RM68200/eiq_camera_conf.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/display/RK055AHD091_RK055IQH091/eiq_display_conf.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_video_worker.c
+)
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video
+)
+
+else()
+
+message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt1170 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
 
 endif()
 
@@ -1283,14 +1434,16 @@ endif()
 endif()
 
 
-if (CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1040)
-# Add set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1040 true) in config.cmake to use this component
+if (CONFIG_USE_middleware_eiq_worker_video_evkbimxrt1050)
+# Add set(CONFIG_USE_middleware_eiq_worker_video_evkbimxrt1050 true) in config.cmake to use this component
 
-message("middleware_eiq_worker_video_evkmimxrt1040 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+message("middleware_eiq_worker_video_evkbimxrt1050 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
 
 if(CONFIG_USE_middleware_eiq_worker)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/camera/MT9M114_OV7725/eiq_camera_conf.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/display/RK043FN02HC/eiq_display_conf.c
   ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
   ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
   ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
@@ -1303,73 +1456,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 
 else()
 
-message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt1040 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_worker_video_mimxrt685audevk)
-# Add set(CONFIG_USE_middleware_eiq_worker_video_mimxrt685audevk true) in config.cmake to use this component
-
-message("middleware_eiq_worker_video_mimxrt685audevk component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if(CONFIG_USE_middleware_eiq_worker)
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_video_worker.c
-)
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video
-)
-
-else()
-
-message(SEND_ERROR "middleware_eiq_worker_video_mimxrt685audevk dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary)
-# Add set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary true) in config.cmake to use this component
-
-message("middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if(((CONFIG_DEVICE_ID STREQUAL MIMXRT595S) OR (CONFIG_CORE STREQUAL dsp)))
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/.
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/include
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/include/nnlib
-)
-
-if(CONFIG_USE_COMPONENT_CONFIGURATION)
-  message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
-
-  target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
-    -DNNLIB_V2
-    -DMODEL_INT16
-    -Dhifi4
-  )
-
-endif()
-
-target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  -Wl,--start-group
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/lib/mimxrt595s/libxa_nnlib_hifi4.a
-  -Wl,--end-group
-)
-
-else()
-
-message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+message(SEND_ERROR "middleware_eiq_worker_video_evkbimxrt1050 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
 
 endif()
 
@@ -1405,6 +1492,33 @@ endif()
 endif()
 
 
+if (CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1040)
+# Add set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1040 true) in config.cmake to use this component
+
+message("middleware_eiq_worker_video_evkmimxrt1040 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if(CONFIG_USE_middleware_eiq_worker)
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_video_worker.c
+)
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/./common/video
+)
+
+else()
+
+message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt1040 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
+
+endif()
+
+
 if (CONFIG_USE_middleware_eiq_worker_video_evkbmimxrt1170)
 # Add set(CONFIG_USE_middleware_eiq_worker_video_evkbmimxrt1170 true) in config.cmake to use this component
 
@@ -1428,35 +1542,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 else()
 
 message(SEND_ERROR "middleware_eiq_worker_video_evkbmimxrt1170 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_worker_video_evkbimxrt1050)
-# Add set(CONFIG_USE_middleware_eiq_worker_video_evkbimxrt1050 true) in config.cmake to use this component
-
-message("middleware_eiq_worker_video_evkbimxrt1050 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if(CONFIG_USE_middleware_eiq_worker)
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/camera/MT9M114_OV7725/eiq_camera_conf.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/display/RK043FN02HC/eiq_display_conf.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_video_worker.c
-)
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video
-)
-
-else()
-
-message(SEND_ERROR "middleware_eiq_worker_video_evkbimxrt1050 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
 
 endif()
 
@@ -1513,91 +1598,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 else()
 
 message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt685 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1060)
-# Add set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1060 true) in config.cmake to use this component
-
-message("middleware_eiq_worker_video_evkmimxrt1060 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if(CONFIG_USE_middleware_eiq_worker)
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/camera/MT9M114_OV7725/eiq_camera_conf.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/display/RK043FN02HC/eiq_display_conf.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_video_worker.c
-)
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video
-)
-
-else()
-
-message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt1060 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1064)
-# Add set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt1064 true) in config.cmake to use this component
-
-message("middleware_eiq_worker_video_evkmimxrt1064 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if(CONFIG_USE_middleware_eiq_worker)
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/camera/MT9M114_OV7725/eiq_camera_conf.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/display/RK043FN02HC/eiq_display_conf.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_video_worker.c
-)
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video
-)
-
-else()
-
-message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt1064 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_worker_video_evkmimxrt595)
-# Add set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt595 true) in config.cmake to use this component
-
-message("middleware_eiq_worker_video_evkmimxrt595 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if(CONFIG_USE_middleware_eiq_worker)
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_camera.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_display.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_pxp.c
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video/eiq_video_worker.c
-)
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./common/video
-)
-
-else()
-
-message(SEND_ERROR "middleware_eiq_worker_video_evkmimxrt595 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
 
 endif()
 
