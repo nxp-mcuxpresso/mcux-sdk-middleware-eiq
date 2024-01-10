@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,9 +32,9 @@
 
 /* MPP includes */
 #include "mpp_api.h"
-#include "board_config.h"
+#include "mpp_config.h"
 
-#include "models/mobilenet_v1_0.25_128_quant_int8_cm7/mobilenetv1_output_postproc.h"
+#include "models/mobilenet_v1_0.25_128_quant_int8/mobilenetv1_output_postproc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -59,12 +59,16 @@ typedef struct _user_data_t {
 
 /* Model data input (depends on inference engine) */
 #if defined(INFERENCE_ENGINE_TFLM)
-#include "models/mobilenet_v1_0.25_128_quant_int8_cm7/mobilenetv1_model_data_tflite.h"
+#ifdef APP_USE_NEUTRON16_MODEL
+#include "models/mobilenet_v1_0.25_128_quant_int8/mobilenetv1_model_data_tflite_npu16.h"
+#else  // APP_USE_NEUTRON16_MODEL
+#include "models/mobilenet_v1_0.25_128_quant_int8/mobilenetv1_model_data_tflite.h"
+#endif  // APP_USE_NEUTRON16_MODEL
 #elif defined(INFERENCE_ENGINE_GLOW)
-#include "models/mobilenet_v1_0.25_128_quant_int8_cm7/mobilenet_v1_weights_glow.h"
-#include "models/mobilenet_v1_0.25_128_quant_int8_cm7/mobilenet_v1_glow.h"
+#include "models/mobilenet_v1_0.25_128_quant_int8/mobilenet_v1_weights_glow_cm7.h"
+#include "models/mobilenet_v1_0.25_128_quant_int8/mobilenet_v1_glow_cm7.h"
 #elif defined(INFERENCE_ENGINE_DeepViewRT)
-#include <models/mobilenet_v1_0.25_128_quant_int8_cm7/mobilenet_model_data_dvrt.h>
+#include <models/mobilenet_v1_0.25_128_quant_int8/mobilenet_model_data_dvrt.h>
 #else
 #error "ERROR: An inference engine must be selected"
 #endif
@@ -73,7 +77,11 @@ typedef struct _user_data_t {
  * SWAP_DIMS = 1 if source/display dims are reversed
  * SWAP_DIMS = 0 if source/display have the same orientation
  */
+#ifdef APP_SKIP_CONVERT_FOR_DISPLAY
+#define SWAP_DIMS 0
+#else
 #define SWAP_DIMS (((APP_DISPLAY_LANDSCAPE_ROTATE == ROTATE_90) || (APP_DISPLAY_LANDSCAPE_ROTATE == ROTATE_270)) ? 1 : 0)
+#endif
 
 /* display small and large dims */
 #define DISPLAY_SMALL_DIM MIN(APP_DISPLAY_WIDTH, APP_DISPLAY_HEIGHT)
@@ -236,7 +244,7 @@ static void app_task(void *params)
 #error "Please select inference engine"
 #endif
 
-    mpp_api_params_t api_params;
+    mpp_api_params_t api_params = {0};
     mpp_stats_t api_stats;
     memset(&api_stats, 0, sizeof(api_stats));
     api_params.stats = &api_stats;
@@ -357,6 +365,7 @@ static void app_task(void *params)
         goto err;
     }
 
+#ifndef APP_SKIP_CONVERT_FOR_DISPLAY
     /* On the main branch of the pipeline, send the frame to the display */
     /* First do color-convert + flip */
     memset(&elem_params, 0, sizeof(elem_params));
@@ -374,6 +383,7 @@ static void app_task(void *params)
         PRINTF("Failed to add element CONVERT\n");
         goto err;
     }
+#endif
 
     /* add one label rectangle */
     memset(&elem_params, 0, sizeof(elem_params));
@@ -400,6 +410,7 @@ static void app_task(void *params)
         goto err;
     }
 
+#ifndef APP_SKIP_CONVERT_FOR_DISPLAY
     /* then rotate if needed */
     if (APP_DISPLAY_LANDSCAPE_ROTATE != ROTATE_0) {
     	memset(&elem_params, 0, sizeof(elem_params));
@@ -415,12 +426,16 @@ static void app_task(void *params)
     		goto err;
     	}
     }
+#endif
 
     mpp_display_params_t disp_params;
     memset(&disp_params, 0 , sizeof(disp_params));
     disp_params.format = APP_DISPLAY_FORMAT;
     disp_params.width  = APP_DISPLAY_WIDTH;
     disp_params.height = APP_DISPLAY_HEIGHT;
+#ifdef APP_SKIP_CONVERT_FOR_DISPLAY
+    disp_params.rotate = APP_DISPLAY_LANDSCAPE_ROTATE;
+#endif
     ret = mpp_display_add(mp, s_display_name, &disp_params);
     if (ret) {
         PRINTF("Failed to add display %s\n", s_display_name);

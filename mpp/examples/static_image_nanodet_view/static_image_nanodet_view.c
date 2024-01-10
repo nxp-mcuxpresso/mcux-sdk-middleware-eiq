@@ -33,11 +33,11 @@
 /* MPP includes */
 #include "mpp_api.h"
 #include "mpp_config.h"
-#include "board_config.h"
+
 /* utility functions */
 #include "models/utils.h"
-#include "models/nanodet_m_320_quant_int8_cm7/nanodet_labels.h"
-#include "models/nanodet_m_320_quant_int8_cm7/nanodet_m_output_postproc.h"
+#include "models/nanodet_m_320_quant_int8/nanodet_labels.h"
+#include "models/nanodet_m_320_quant_int8/nanodet_m_output_postproc.h"
 
 
 /*******************************************************************************
@@ -73,10 +73,10 @@ typedef struct _user_data_t {
 #if (HAL_TFLM_TENSOR_ARENA_SIZE_KB < 2048)
 #error "Must set HAL_TFLM_TENSOR_ARENA_SIZE_KB >= 2048"
 #endif
-#include "models/nanodet_m_320_quant_int8_cm7/nanodet_m_0.5x_nhwc_tflite.h"
+#include "models/nanodet_m_320_quant_int8/nanodet_m_0.5x_nhwc_tflite.h"
 #elif defined(INFERENCE_ENGINE_GLOW)
-#include "models/nanodet_m_320_quant_int8_cm7/nanodet_m_weights_glow.h"
-#include "models/nanodet_m_320_quant_int8_cm7/nanodet_m_glow.h"
+#include "models/nanodet_m_320_quant_int8/nanodet_m_weights_glow_cm7.h"
+#include "models/nanodet_m_320_quant_int8/nanodet_m_glow_cm7.h"
 #else
 #error "ERROR: An inference engine must be selected"
 #endif

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -38,9 +38,9 @@ float iou(box_data* box1, box_data* box2){
 }
 
 static void swap_boxes(box_data boxes[], int32_t i, int32_t j) {
-	box_data tmp = boxes[i];
-	boxes[i] = boxes[j];
-	boxes[j] = tmp;
+    box_data tmp = boxes[i];
+    boxes[i] = boxes[j];
+    boxes[j] = tmp;
 }
 
 /* Inserts boxes in box_pointers then sorts the array by score.
@@ -51,7 +51,7 @@ static void swap_boxes(box_data boxes[], int32_t i, int32_t j) {
 static int32_t sort_boxes(box_data boxes[], int32_t num_boxes, float score_thr) {
 
     int n_selected_boxes = 0;
-	/* first box, initialize box counting and area computation */
+    /* first box, initialize box counting and area computation */
     if(boxes[0].score < score_thr)
         boxes[0] = {0};
     else
@@ -60,70 +60,120 @@ static int32_t sort_boxes(box_data boxes[], int32_t num_boxes, float score_thr) 
         boxes[0].area = area(&boxes[0]);
     }
 
-	for(int32_t i = 1; i < num_boxes; i++) {
-	    /* filter-out box with low scores */
-	    /* else pre-compute area of box */
-	    if(boxes[i].score < score_thr)
-	    {
-	        boxes[i] = {0};
-	    }
-	    else
-	    {
-	        n_selected_boxes++;
-	        boxes[i].area = area(&boxes[i]);
-	    }
+    for(int32_t i = 1; i < num_boxes; i++) {
+        /* filter-out box with low scores */
+        /* else pre-compute area of box */
+        if(boxes[i].score < score_thr)
+        {
+            boxes[i] = {0};
+        }
+        else
+        {
+            n_selected_boxes++;
+            boxes[i].area = area(&boxes[i]);
+        }
 
-	    /* bubble sort... */
-	    /* TODO: replace with quicksort */
-		for(int32_t j = i; j > 0; j-- ) {
-			if(boxes[j].score > boxes[j-1].score) {
-				swap_boxes(boxes, j-1, j);
-			}
-		}
-	}
+        /* bubble sort... */
+        /* TODO: replace with quicksort */
+        for(int32_t j = i; j > 0; j-- ) {
+            if(boxes[j].score > boxes[j-1].score) {
+                swap_boxes(boxes, j-1, j);
+            }
+        }
+    }
 
-	return n_selected_boxes;
+    return n_selected_boxes;
 }
 /* Filters boxes using NMS threshold on IoU.
  * Boxes that are filtered out are set to NULL.
  */
 static void filter_boxes(box_data boxes[], int32_t num_boxes, float nms_thr) {
 
-	for(int32_t i = 0; i < num_boxes; i++) {
+    for(int32_t i = 0; i < num_boxes; i++) {
 
-		box_data* curr_box = &boxes[i];
+        box_data* curr_box = &boxes[i];
 
-		/* ignore box if already suppressed */
-		if(curr_box->area == 0) {
-			continue;
-		}
+        /* ignore box if already suppressed */
+        if(curr_box->area == 0) {
+            continue;
+        }
 
-		int32_t curr_label = curr_box->label;
+        int32_t curr_label = curr_box->label;
 
-		for(int32_t j = i+1; j < num_boxes; j++) {
+        for(int32_t j = i+1; j < num_boxes; j++) {
 
-			box_data* candidate = &boxes[j];
+            box_data* candidate = &boxes[j];
 
-			/* ignore box if already suppressed */
-			if(candidate->area == 0) {
-				continue;
-			}
+            /* ignore box if already suppressed */
+            if(candidate->area == 0) {
+                continue;
+            }
 
-			/* ignore box if label is different */
-			if(candidate->label != curr_label) {
-				continue;
-			}
+            /* ignore box if label is different */
+            if(candidate->label != curr_label) {
+                continue;
+            }
 
-			/* remove box if IoU is too high */
-			if (iou(curr_box, candidate) >= nms_thr) boxes[j] = {0};
-		}
-	}
+            /* remove box if IoU is too high */
+            if (iou(curr_box, candidate) >= nms_thr) boxes[j] = {0};
+        }
+    }
 }
 
 void nms(box_data boxes[], int32_t num_boxes, float nms_thr, float score_thr) {
     assert(boxes != NULL);
-	/* sort and filter boxes by score */
+    /* sort and filter boxes by score */
     int32_t n_selected_boxes = sort_boxes(boxes, num_boxes, score_thr);
-	/* filter boxes by IoU */
-	filter_boxes(boxes, n_selected_boxes, nms_thr);
+    /* filter boxes by IoU */
+    filter_boxes(boxes, n_selected_boxes, nms_thr);
+}
+
+int32_t nms_insert_box(box_data boxes[], box_data curr_box, int32_t n_inserted, float nms_thr, int32_t max_boxes) {
+
+    // Compute area of the candidate box.
+    curr_box.area = area(&curr_box);
+
+    for (int32_t i = 0; i <= n_inserted; i++) {
+        if(boxes[i].score >= curr_box.score && iou(&boxes[i], &curr_box) >= nms_thr) {
+            // curr_box suppressed by IoU threshold
+            return n_inserted;
+        } else if(boxes[i].score < curr_box.score) {
+            // Found box with lower score than the candidate.
+            // Thus, insert box at this index.
+
+            // Filter subsequent boxes by IoU
+            for (int32_t j = i; j < n_inserted; j++) {
+                if (iou(&boxes[j], &curr_box) >= nms_thr) {
+                    // This box is overlapping and has lower score
+                    // thus we remove it.
+                    boxes[j] = {0};
+                    // Fill the gap by moving all subsequent boxes up.
+                    for (int32_t k = j; k < n_inserted-1; k++) {
+                        swap_boxes(boxes, k, k+1);
+                    }
+                    // Next iteration must check the current index again
+                    // since all subsequent boxes have been shifted.
+                    j--;
+                    // We removed a box.
+                    n_inserted--;
+                }
+            }
+
+            // Push all subsequent boxes by 1 to make room for curr_box.
+            for (int32_t j = n_inserted-1; j >= i; j--) {
+                swap_boxes(boxes, j, j+1);
+            }
+
+            // Insert curr_box at the chosen index.
+            boxes[i] = curr_box;
+
+            // Increment n_inserted but limit to max_boxes
+            n_inserted = MIN(n_inserted+1, max_boxes);
+            break;
+        } else {
+            continue;
+        }
+    }
+
+    return n_inserted;
 }

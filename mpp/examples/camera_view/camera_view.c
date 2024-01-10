@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,7 +23,7 @@
 
 /* MPP includes */
 #include "mpp_api.h"
-#include "board_config.h"
+#include "mpp_config.h"
 
 /*******************************************************************************
  * Definitions
@@ -122,6 +122,7 @@ static void app_task(void *params) {
         goto err;
     }
 
+#ifndef APP_SKIP_CONVERT_FOR_DISPLAY
     /* add convert element for color conversion and rotation
        as required by the display */
     mpp_element_params_t elem_params;
@@ -140,6 +141,7 @@ static void app_task(void *params) {
         PRINTF("Failed to add element CONVERT - op COLOR|ROTATE\n");
         goto err;
     }
+#endif /* SKIP_CONVERT */
 
     /* add display */
     mpp_display_params_t disp_params;
@@ -147,6 +149,9 @@ static void app_task(void *params) {
     disp_params.format = args->display_format;
     disp_params.width  = APP_DISPLAY_WIDTH;
     disp_params.height = APP_DISPLAY_HEIGHT;
+#ifdef APP_SKIP_CONVERT_FOR_DISPLAY
+    disp_params.rotate = APP_DISPLAY_LANDSCAPE_ROTATE;
+#endif
     ret = mpp_display_add(mp, args->display_name, &disp_params);
     if (ret) {
         PRINTF("Failed to add display %s\n", args->display_name);
@@ -154,7 +159,7 @@ static void app_task(void *params) {
     }
 
     /* start mpp and run application pipeline */
-    ret += mpp_start(mp, 1);
+    ret = mpp_start(mp, 1);
     if (ret) {
         PRINTF("Failed to start pipeline\n");
         goto err;

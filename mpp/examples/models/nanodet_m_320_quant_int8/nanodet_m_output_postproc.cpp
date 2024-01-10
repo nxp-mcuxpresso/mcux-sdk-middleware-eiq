@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2022 NXP
+ * Copyright 2020-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -144,6 +144,8 @@ static void decode_output(const float *cls_predictions, const float *reg_predict
     int cls_offset = 0;
     int reg_offset = 0;
     float value = 0.0f;
+    int n_inserted = 0;
+    box_data curr_box;
 
     /* initialize elements */
     for (int i = 0; i < NUM_BOXES_MAX; i++){
@@ -159,10 +161,12 @@ static void decode_output(const float *cls_predictions, const float *reg_predict
                 curr_label = j - cls_offset;
             }
         }
-        boxes[i].label = curr_label;
-        boxes[i].score = score;
+        curr_box.label = curr_label;
+        curr_box.score = score;
         if (score >= threshold){
-            boxes_distribution_prediction(&boxes[i], reg_preds, centers[i]);
+            boxes_distribution_prediction(&curr_box, reg_preds, centers[i]);
+
+            n_inserted = nms_insert_box(boxes, curr_box, n_inserted, NMS_THRESH, NUM_BOXES_MAX);
         }
         cls_offset = cls_offset + NANODET_NUM_CLASS;
         reg_offset = reg_offset + NANODET_NUM_REGS;
@@ -179,7 +183,8 @@ static int decode_output_int8(const int8_t *cls_predictions, const int8_t *reg_p
     int cls_offset = 0;
     int reg_offset = 0;
     int8_t value = 0;
-    int boxidx = 0;
+    int n_inserted = 0;
+    box_data curr_box;
 
     /* initialize elements */
     for (int i = 0; i < NUM_BOXES_MAX; i++)
@@ -201,15 +206,16 @@ static int decode_output_int8(const int8_t *cls_predictions, const int8_t *reg_p
 
         if (score >= threshold)
         {
-            boxes[boxidx].label = curr_label;
-            boxes[boxidx].score = (score + 128.0f) / 256.0f;
-            boxes_distribution_prediction_int8(&boxes[boxidx], reg_preds, centers[i]);
-            boxidx++;
+            curr_box.label = curr_label;
+            curr_box.score = (score + 128.0f) / 256.0f;
+            boxes_distribution_prediction_int8(&curr_box, reg_preds, centers[i]);
+
+            n_inserted = nms_insert_box(boxes, curr_box, n_inserted, NMS_THRESH, NUM_BOXES_MAX);
         }
         cls_offset = cls_offset + NANODET_NUM_CLASS;
         reg_offset = reg_offset + NANODET_NUM_REGS;
     }
-    return boxidx+1;
+    return n_inserted;
 }
 
 // Used for models with float output tensors
@@ -296,9 +302,7 @@ int32_t NANODET_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_data*
 
     memset(final_boxes, 0, NUM_BOXES_MAX*sizeof(box_data));
 
-    int nb_box = decode_output_int8(cls_preds_int, reg_preds_int, (const center_prior *)centers, final_boxes);
-
-    nms(final_boxes, nb_box, NMS_THRESH, DETECTION_TRESHOLD/100.0);
+    decode_output_int8(cls_preds_int, reg_preds_int, (const center_prior *)centers, final_boxes);
 
     return 0;
 }

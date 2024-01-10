@@ -32,7 +32,6 @@
 
 /* MPP includes */
 #include "mpp_api.h"
-#include "board_config.h"
 #include "mpp_config.h"
 
 /* utility functions */
@@ -42,21 +41,30 @@
  * Variables declaration
  ******************************************************************************/
 
-/* Model data input (depends on inference engine) */
-#if (HAL_TFLM_TENSOR_ARENA_SIZE_KB < 1536)
+/* Model data input */
+#if defined(APP_USE_NEUTRON16_MODEL)
+#include "models/ultraface_slim_quant_int8/ultraface_slim_ultraslim_npu16_tflite.h"
+#else
+#include "models/ultraface_slim_quant_int8/ultraface_slim_tflite.h"
+#endif
+
+#if defined(APP_USE_NEUTRON16_MODEL) && (HAL_TFLM_TENSOR_ARENA_SIZE_KB < 254)
+#error "Must set HAL_TFLM_TENSOR_ARENA_SIZE_KB >= 254"
+#elif !defined(APP_USE_NEUTRON16_MODEL) && (HAL_TFLM_TENSOR_ARENA_SIZE_KB < 1536)
 #error "Must set HAL_TFLM_TENSOR_ARENA_SIZE_KB >= 1536"
 #endif
 
-
-#include "models/ultraface_slim_quant_int8_cm7/ultraface_slim_tflite.h"
-
-#include "models/ultraface_slim_quant_int8_cm7/ultraface_output_postproc.h"
+#include "models/ultraface_slim_quant_int8/ultraface_output_postproc.h"
 
 /*
  * SWAP_DIMS = 1 if source/display dims are reversed
  * SWAP_DIMS = 0 if source/display have the same orientation
  */
+#ifdef APP_SKIP_CONVERT_FOR_DISPLAY
+#define SWAP_DIMS 0
+#else
 #define SWAP_DIMS (((APP_DISPLAY_LANDSCAPE_ROTATE == ROTATE_90) || (APP_DISPLAY_LANDSCAPE_ROTATE == ROTATE_270)) ? 1 : 0)
+#endif
 
 /* display small and large dims */
 #define DISPLAY_SMALL_DIM MIN(APP_DISPLAY_WIDTH, APP_DISPLAY_HEIGHT)
@@ -341,7 +349,9 @@ static void app_task(void *params)
     elem_params.convert.scale.height = MODEL_HEIGHT;
     elem_params.convert.ops |= MPP_CONVERT_SCALE;
     /* then add a flip */
+#ifndef APP_SKIP_CONVERT_FOR_DISPLAY
     elem_params.convert.flip = FLIP_HORIZONTAL;
+#endif
     elem_params.convert.ops |=  MPP_CONVERT_ROTATE;
 
     ret = mpp_element_add(mp_split, MPP_ELEMENT_CONVERT, &elem_params, NULL);
@@ -375,8 +385,9 @@ static void app_task(void *params)
         goto err;
     }
 
+#ifndef APP_SKIP_CONVERT_FOR_DISPLAY
     /* On the main branch of the pipeline, send the frame to the display */
-    /* First do color-convert + rotate */
+    /* First do color-convert + flip */
     memset(&elem_params, 0, sizeof(elem_params));
     /* pick default device from the first listed and supported by Hw */
     elem_params.convert.dev_name = NULL;
@@ -395,6 +406,7 @@ static void app_task(void *params)
         PRINTF("Failed to add element CONVERT\n");
         goto err;
     }
+#endif
 
     /* add one label rectangle */
     memset(&elem_params, 0, sizeof(elem_params));
@@ -421,6 +433,7 @@ static void app_task(void *params)
         goto err;
     }
 
+#ifndef APP_SKIP_CONVERT_FOR_DISPLAY
     /* then rotate if needed */
     if (APP_DISPLAY_LANDSCAPE_ROTATE != ROTATE_0) {
     	memset(&elem_params, 0, sizeof(elem_params));
@@ -436,12 +449,16 @@ static void app_task(void *params)
     		goto err;
     	}
     }
+#endif
 
     mpp_display_params_t disp_params;
     memset(&disp_params, 0 , sizeof(disp_params));
     disp_params.format = APP_DISPLAY_FORMAT;
     disp_params.width  = APP_DISPLAY_WIDTH;
     disp_params.height = APP_DISPLAY_HEIGHT;
+#ifdef APP_SKIP_CONVERT_FOR_DISPLAY
+    disp_params.rotate = APP_DISPLAY_LANDSCAPE_ROTATE;
+#endif
     ret = mpp_display_add(mp, s_display_name, &disp_params);
     if (ret) {
         PRINTF("Failed to add display %s\n", s_display_name);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -37,6 +37,13 @@ float iou(box_data* box1, box_data* box2);
  * Boxes removed by NMS will be zeroed.
  */
 void nms(box_data boxes[], int32_t num_boxes, float nms_thr, float score_thr);
+
+/* Inserts a box into an array of boxes sorted by score
+ * and performs non-maximum suppression in place on the fly.
+ * This function does NOT filter bounding boxes with low scores.
+ * Returns the number of boxes inserted (and kept) in the array.
+ */
+int32_t nms_insert_box(box_data boxes[], box_data curr_box, int32_t n_inserted, float nms_thr, int32_t max_boxes);
 
 #if defined(__cplusplus)
 }

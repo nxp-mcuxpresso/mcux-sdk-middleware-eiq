@@ -10,11 +10,16 @@
 
 #include "mpp_api_types.h"
 #include "../utils.h"
+#include "mpp_config.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#ifndef APP_ULTRAFACE_ULTRASLIM
 #define MAX_POINTS          4420 //maximum number of center priors
+#else
+#define MAX_POINTS          172 //maximum number of center priors
+#endif
 
 /**
  * Process the Ultraface output tensors

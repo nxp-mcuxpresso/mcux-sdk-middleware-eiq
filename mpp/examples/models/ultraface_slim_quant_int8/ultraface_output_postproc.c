@@ -6,13 +6,14 @@
  */
 
 /*
- * The function that processes the tensor output of model Ultraface-slim 240x320
+ * The function that processes the tensor output of model Ultraface-slim 240x320 and
+ * Ultraface-slim-ultraslim 128x128
  */
 
 #include <stdio.h>
 #include <math.h>
-#include <models/ultraface_slim_quant_int8_cm7/ultraface_output_postproc.h>
 #include <float.h>
+#include "ultraface_output_postproc.h"
 
 #include "../utils.h"
 #include "../get_top_n.h"
@@ -27,9 +28,13 @@
 #define OUTPUT_SCALE             0.00392156f
 #define OUTPUT_ZERO_POINT        -128.0f
 #define INT8_RANGE               255     // 127 - (-128) = 255
+#ifndef APP_ULTRAFACE_ULTRASLIM
 #define ULTRAFACE_MODEL_WIDTH    320
 #define ULTRAFACE_MODEL_HEIGHT   240
-
+#else
+#define ULTRAFACE_MODEL_WIDTH    128
+#define ULTRAFACE_MODEL_HEIGHT   128
+#endif
 box_data g_boxes[MAX_POINTS] = {0};
 
 /* decode the output tensor and fill-in boxes above detection threshold.
@@ -40,7 +45,8 @@ static int decode_output_int8(const int8_t *predictions, box_data boxes[], int n
     // predictions are in an array [no_face_score, face_score, left, top, right, bottom]
     int cls_offset = 1;
     int reg_offset = 2;
-    int boxidx = 0, nbbox = 0;
+    int nbbox = 0;
+    box_data curr_box;
 
     const int threshold = DETECTION_TRESHOLD * INT8_RANGE / 100 + OUTPUT_ZERO_POINT;
     int8_t score;
@@ -51,39 +57,13 @@ static int decode_output_int8(const int8_t *predictions, box_data boxes[], int n
         score = predictions[cls_offset];
         if (score >= threshold)
         {
-            /* find room for new box */
-            boxidx = -1;
-            if (nbbox < nb_box_max)
-            {
-                /* use an empty slot */
-                boxidx = nbbox;
-                nbbox++;
-            }
-            else
-            {
-                /* find box with lowest score to replace it */
-                float lowest = FLT_MAX; /* start with max */
-                for(int l = 0; l < nb_box_max; l++)
-                {
-                    if(boxes[l].score < lowest)
-                    {
-                        lowest = boxes[l].score;
-                        boxidx = l;
-                    }
-                }
-                /* if new score is lower than lowest in boxes: skip it */
-                float f_score = (score - OUTPUT_ZERO_POINT) * OUTPUT_SCALE;
-                if (f_score < lowest) boxidx = -1;
-            }
-            if (boxidx >= 0)
-            {
-                boxes[boxidx].label = 1;
-                boxes[boxidx].score = (score - OUTPUT_ZERO_POINT) * OUTPUT_SCALE;
-                boxes[boxidx].left   = (int16_t) (((predictions[reg_offset]     - OUTPUT_ZERO_POINT) * OUTPUT_SCALE)  * (1.0f * ULTRAFACE_MODEL_WIDTH));
-                boxes[boxidx].top    = (int16_t) (((predictions[reg_offset + 1] - OUTPUT_ZERO_POINT) * OUTPUT_SCALE)  * (1.0f * ULTRAFACE_MODEL_HEIGHT));
-                boxes[boxidx].right  = (int16_t) (((predictions[reg_offset + 2] - OUTPUT_ZERO_POINT) * OUTPUT_SCALE)  * (1.0f * ULTRAFACE_MODEL_WIDTH));
-                boxes[boxidx].bottom = (int16_t) (((predictions[reg_offset + 3] - OUTPUT_ZERO_POINT) * OUTPUT_SCALE)  * (1.0f * ULTRAFACE_MODEL_HEIGHT));
-            }   /* else the box is skipped */
+            curr_box.label  = 1;
+            curr_box.score  = (score - OUTPUT_ZERO_POINT) * OUTPUT_SCALE;
+            curr_box.left   = (int16_t) (((predictions[reg_offset]     - OUTPUT_ZERO_POINT) * OUTPUT_SCALE)  * (1.0f * ULTRAFACE_MODEL_WIDTH));
+            curr_box.top    = (int16_t) (((predictions[reg_offset + 1] - OUTPUT_ZERO_POINT) * OUTPUT_SCALE)  * (1.0f * ULTRAFACE_MODEL_HEIGHT));
+            curr_box.right  = (int16_t) (((predictions[reg_offset + 2] - OUTPUT_ZERO_POINT) * OUTPUT_SCALE)  * (1.0f * ULTRAFACE_MODEL_WIDTH));
+            curr_box.bottom = (int16_t) (((predictions[reg_offset + 3] - OUTPUT_ZERO_POINT) * OUTPUT_SCALE)  * (1.0f * ULTRAFACE_MODEL_HEIGHT));
+            nbbox = nms_insert_box(boxes, curr_box, nbbox, NMS_THRESH, nb_box_max);
         }
         cls_offset = cls_offset + 6;
         reg_offset = reg_offset + 6;
@@ -93,7 +73,6 @@ static int decode_output_int8(const int8_t *predictions, box_data boxes[], int n
 
 int32_t ULTRAFACE_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_data* final_boxes, int nb_box_max)
 {
-    int nb_box;
 	if (inf_out == NULL) {
 		PRINTF("ERROR: ULTRAFACE_ProcessOutput parameter 'inf_out' is null pointer" EOL);
 		return -1;
@@ -120,9 +99,7 @@ int32_t ULTRAFACE_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_dat
     /* clear old data */
     memset(final_boxes, 0, nb_box_max*sizeof(box_data));
 
-    nb_box = decode_output_int8(preds_int, final_boxes, nb_box_max);
-
-    nms(final_boxes, nb_box, NMS_THRESH, DETECTION_TRESHOLD/100.0);
+    decode_output_int8(preds_int, final_boxes, nb_box_max);
 
     return 0;
 }
